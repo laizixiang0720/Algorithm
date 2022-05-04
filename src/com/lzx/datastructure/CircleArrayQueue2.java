@@ -9,10 +9,10 @@ import java.util.Random;
  *
  * @author laizixiang
  */
-public class CircleArrayQueue2 {
+public class CircleArrayQueue2 <E>{
 
     public static void main(String[] args) {
-        CircleArrayQueue2 r = new CircleArrayQueue2(10);
+        CircleArrayQueue2<Integer> r = new CircleArrayQueue2<>(10);
         Random random = new Random(System.currentTimeMillis());
         System.out.println("----------------------添加数据----------------------");
         for (int i = 0; i < 10; i++) {
@@ -40,7 +40,7 @@ public class CircleArrayQueue2 {
      * 队列容量
      */
     private final int capacity;
-    private final Integer[] elements;
+    private final Object[] elements;
 
     private int front;
     private int rear;
@@ -52,7 +52,7 @@ public class CircleArrayQueue2 {
 
     public CircleArrayQueue2(int capacity) {
         this.capacity = capacity;
-        elements = new Integer[this.capacity];
+        elements = new Object[this.capacity];
     }
 
     public boolean isFull() {
@@ -67,7 +67,7 @@ public class CircleArrayQueue2 {
         return (rear + capacity - front) % capacity;
     }
 
-    public boolean add(int element) {
+    public boolean add(E element) {
         if (isFull()) {
             System.out.println("注意队列已满！");
             return false;
@@ -77,12 +77,12 @@ public class CircleArrayQueue2 {
         return true;
     }
 
-    public Integer remove() {
+    public E remove() {
         if (isEmpty()) {
             System.out.println("注意队列为空！");
             return null;
         }
-        Integer element = elements[front];
+        E element = (E)elements[front];
         elements[front] = null;
         front = (++front) % capacity;
         return element;
@@ -91,11 +91,11 @@ public class CircleArrayQueue2 {
     public void showQueue() {
         for (int i = 0; i < elements.length; i++) {
             if (i == front) {
-                System.out.printf("[%d]-%d <- front\n", i, elements[i]);
+                System.out.println("["+i+"]-"+elements[i]+" <- front" );
             } else if (i == rear) {
-                System.out.printf("[%d]-%d <- rear\n", i, elements[i]);
+                System.out.println("["+i+"]-"+elements[i]+" <- rear");
             } else {
-                System.out.printf("[%d]-%d\n", i, elements[i]);
+                System.out.println("["+i+"]-"+elements[i]);
             }
 
         }

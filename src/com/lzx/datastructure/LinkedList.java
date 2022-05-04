@@ -4,7 +4,7 @@ package com.lzx.datastructure;
 /**
  * @author laizixiang
  */
-public class LinkedList<E> {
+public class LinkedList<E>  {
     public void setHead(Node<E> head) {
         this.head = head;
     }

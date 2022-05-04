@@ -1,6 +1,7 @@
 package com.lzx.datastructure;
 
 
+import java.util.LinkedList;
 import java.util.Random;
 
 /**
