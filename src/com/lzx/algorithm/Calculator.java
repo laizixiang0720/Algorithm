@@ -19,7 +19,7 @@ public class Calculator {
     public static void main(String[] args) {
 
         Calculator calculator = new Calculator("5+3*6-3*3+2");
-        System.out.println(calculator.evaluate());
+        System.out.println(calculator.infixToSuffix("1+((2+3)*4)-5"));
     }
 
     public Calculator(String expression) {
@@ -54,19 +54,65 @@ public class Calculator {
         return numStack.pop();
     }
 
+    public Integer evaluateBySuffix(String suffixExpression) {
+
+        return null;
+    }
+
     public int priority(char operator) {
         if (operator == MULTI || operator == DIVISION) {
             return 2;
-        } else if (operator == MINUS||operator == PLUS) {
+        } else if (operator == MINUS || operator == PLUS) {
             return 1;
         } else {
             return -1;
         }
     }
 
+    /**
+     * @param infixExpression 传入一个中缀表达式，例如：1+((2+3)*2)-4-> 1 2 3+2*+4-
+     */
+
+    public String infixToSuffix(String infixExpression) {
+        //s1 符号栈
+        LinkedStack<Character> s1 = new LinkedStack<>();
+        // s2 后缀表达栈
+        LinkedStack<Character> s2 = new LinkedStack<>();
+        char[] chars = infixExpression.toCharArray();
+        for (char c : chars) {
+            if (!isOperator(c)) {
+                s2.push(c);
+            } else {
+                if (s1.isEmpty() || '(' == s1.peek()) {
+                    s1.push(c);
+                } else {
+                    if (c == '(') {
+                        s1.push(c);
+                    } else if (c == ')') {
+                        while (s1.peek() != '(') {
+                            s2.push(s1.pop());
+                        }
+                        s1.pop();
+                    } else {
+                        while (!s1.isEmpty() && priority(s1.peek()) >= priority(c)) {
+                            s2.push(s1.pop());
+                        }
+                        s1.push(c);
+                    }
+                }
+            }
+        }
+        while (!s1.isEmpty()) {
+            s2.push(s1.pop());
+        }
+        s2.reverse();
+        return s2.toString();
+    }
+
     public boolean isOperator(char c) {
         return !(48 <= c && c <= 57);
     }
+
 
     public int calculate(int a, int b, char operator) {
         switch (operator) {
