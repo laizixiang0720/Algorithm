@@ -14,6 +14,10 @@ public class EightQueens {
     private final int max =8;
     private final int[] arr = new int[max];
 
+    /**
+     * 放置棋子
+     * @param n 放置第几行棋子
+     */
     public void putChess(int n){
         if(n==max){
             System.out.println(Arrays.toString(arr));
@@ -28,6 +32,11 @@ public class EightQueens {
         }
     }
 
+    /**
+     * 测试该行是否能放棋子。
+     * @param n 被测试的行。
+     * @return 返回测试结果。
+     */
     public boolean isValidLocation(int n){
         for (int i = 0; i < n; i++) {
             if(arr[i]==arr[n]||Math.abs(arr[i]-arr[n])==Math.abs(i-n)){
