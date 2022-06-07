@@ -21,7 +21,8 @@ public class Sort {
         }
         System.out.println("排序前：" + Arrays.toString(arr));
         long startTime = System.currentTimeMillis();
-        quickSort1(arr, 0, arr.length - 1);
+          arr = mergeSort(arr);
+        //quickSort1(arr, 0, arr.length - 1);
         //Arrays.sort(arr);
         //shellSort1(arr);
         //insertionSort(arr);
@@ -31,7 +32,11 @@ public class Sort {
         System.out.println("排序后：" + Arrays.toString(arr));
     }
 
-
+    /**
+     * 冒泡排序
+     *
+     * @param arr 待排序数组
+     */
     public static void bubbleSort(int[] arr) {
         int temp;
         boolean flag;
@@ -52,6 +57,11 @@ public class Sort {
         }
     }
 
+    /**
+     * 选择排序
+     *
+     * @param arr 待排序数组
+     */
     public static void selectionSort(int[] arr) {
         int temp;
         int minIndex;
@@ -72,6 +82,11 @@ public class Sort {
 
     }
 
+    /**
+     * 选择排序
+     *
+     * @param arr 待排序数组
+     */
     public static void selectionSort1(int[] arr) {
 
         int minIndex;
@@ -91,6 +106,11 @@ public class Sort {
         }
     }
 
+    /**
+     * 插入排序
+     *
+     * @param arr 待排序数组
+     */
     public static void insertionSort(int[] arr) {
         int temp;
         for (int i = 1; i < arr.length; i++) {
@@ -106,6 +126,11 @@ public class Sort {
         }
     }
 
+    /**
+     * 希尔排序
+     *
+     * @param arr 待排序数组
+     */
     public static void shellSort(int[] arr) {
         int temp;
         int count = 0;
@@ -125,6 +150,11 @@ public class Sort {
         }
     }
 
+    /**
+     * 希尔排序
+     *
+     * @param arr 待排序数组
+     */
     public static void shellSort1(int[] arr) {
 
         int count = 0;
@@ -201,12 +231,12 @@ public class Sort {
             while (pivot < arr[r]) {
                 r--;
             }
-            while (pivot >arr[l]) {
+            while (pivot > arr[l]) {
                 l++;
             }
             //如果l >= r说明pivot 的左右两的值，已经按照左边全部是
             //小于等于pivot值，右边全部是大于等于pivot值
-            if( l >= r) {
+            if (l >= r) {
                 break;
             }
             //交换
@@ -215,11 +245,11 @@ public class Sort {
             arr[r] = temp;
 
             //如果交换完后，发现这个arr[l] == pivot值 相等 r--， 前移
-            if(arr[l] == pivot) {
+            if (arr[l] == pivot) {
                 r -= 1;
             }
             //如果交换完后，发现这个arr[r] == pivot值 相等 l++， 后移
-            if(arr[r] == pivot) {
+            if (arr[r] == pivot) {
                 l += 1;
             }
 
@@ -236,6 +266,49 @@ public class Sort {
         if (right > l) {
             quickSort1(arr, l, right);
         }
+
+    }
+
+    /**
+     * 归并排序
+     *
+     * @param arr 待排序数组
+     */
+    private static int[] mergeSort(int[] arr) {
+        if (arr.length <= 1) {
+            return arr;
+        }
+        int mid = arr.length / 2;
+        int[] arrLeft = Arrays.copyOfRange(arr, 0, mid);
+        int[] arrRight = Arrays.copyOfRange(arr, mid, arr.length);
+        return merge(mergeSort(arrLeft), mergeSort(arrRight));
+
+    }
+
+    private static int[] merge(int[] left, int[] right) {
+        int[] result = new int[left.length + right.length];
+        int i = 0;
+        while (left.length > 0 && right.length > 0) {
+            if (left[0] <= right[0]) {
+                result[i++] = left[0];
+                left = Arrays.copyOfRange(left, 1, left.length);
+            } else {
+                result[i++] = right[0];
+                right = Arrays.copyOfRange(right, 1, right.length);
+            }
+        }
+
+        while (left.length > 0) {
+            result[i++] = left[0];
+            left = Arrays.copyOfRange(left, 1, left.length);
+        }
+
+        while (right.length > 0) {
+            result[i++] = right[0];
+            right = Arrays.copyOfRange(right, 1, right.length);
+        }
+
+        return result;
 
     }
 
